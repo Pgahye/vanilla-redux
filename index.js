@@ -47,3 +47,41 @@ function reducer(state = initialState, action) {
             return state;
     }
 }
+
+// 스토어 생성
+import {createStore} from 'redux';
+const store = createStore(reducer);
+
+// render()함수 생성
+const render = () => {
+    const state = store.getState();
+
+    if(state.toggle){
+        divToggle.classList.add('active');
+    }else{
+        divToggle.classList.remove('active');
+    }
+
+    counter.innerText = state.counter;
+}
+
+render();
+
+// 구독하기 (상태가 업데이트 될때마다 render함수 호출)
+
+store.subscribe(render);
+
+// 액션 발생시키기(디스패치)
+divToggle.onclick = () => {
+    store.dispatch(toggleSwitch());
+}
+
+
+btnIncrease.onclick = () => {
+    store.dispatch(increase(1));
+}
+
+
+btnDecrease.onclick = () => {
+    store.dispatch(decrease());
+}
